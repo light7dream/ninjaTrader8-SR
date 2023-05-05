@@ -28,34 +28,40 @@ using SwissEphNet;
 #endregion
 
 /*
-	YiQuan 1/5/2023-3/5/2023
-	Skype: live:.cid.79e2e1b1d6fcdcb2
-	Outlook: light7fi@outlook.com
+    YiQuan 1/5/2023-3/5/2023
+    Skype: live:.cid.79e2e1b1d6fcdcb2
+    Outlook: light7fi@outlook.com
 */
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators
 {
-	public class MyCustomIndicator : Indicator
-	{
-	
-		// Define the data series for the indicator
-		
+    public class MyCustomIndicator : Indicator
+    {
+
+        // Define the data series for the indicator
+
         #region Properties  
 
         [Display(Name = "TimeZone")]
-		public TIMEZONE myTimeZone
+        public TIMEZONE myTimeZone
         {
-			get; set;
-		}
+            get; set;
+        }
 
-		[Display(Name = "MSD")]
-		[Range(1, 9)]
-		public int MSD
-		{
-			get;set;
-		}
-		[Range(1, 4)]
+        [Display(Name = "MSD")]
+        [Range(1, 9)]
+        public int msd
+        {
+            get;set;
+        }
+        [Display(Name = "MSD Sub")]
+        [Range(1, 9)]
+        public int msdsub
+        {
+            get; set;
+        }
+        [Range(1, 4)]
         [Display(Name = "Significant price level")]
         public int Level
         { get; set; }
@@ -66,41 +72,39 @@ namespace NinjaTrader.NinjaScript.Indicators
 
         #endregion
         protected override void OnStateChange()
-		{
-			
-			if (State == State.SetDefaults)
-			{
-				Description									= @"Enter the description for your new custom Indicator here.";
-				Name										= "MyCustomIndicator";
-				Calculate									= Calculate.OnBarClose;
-				IsOverlay									= false;
-				DisplayInDataBox							= true;
-				DrawOnPricePanel							= true;
-				DrawHorizontalGridLines						= true;
-				DrawVerticalGridLines						= true;
-				PaintPriceMarkers							= true;
-				ScaleJustification							= NinjaTrader.Gui.Chart.ScaleJustification.Right;
-				//Disable this property if your indicator requires custom values that cumulate with each new market data event. 
-				//See Help Guide for additional information.
-				IsSuspendedWhileInactive					= true;
-				MSD = 1;
-				Level = 1;
-                for (int i = 0; i < 9; i++)
-                {
-                    AddPlot(new Stroke(Brushes.Red, 2), PlotStyle.Bar, "Level" + i+" Up");
-                    AddPlot(new Stroke(Brushes.Green, 2), PlotStyle.Bar, "Level" + i + " Down");
-                }
+        {
+
+            if (State == State.SetDefaults)
+            {
+                Description = @"Enter the description for your new custom Indicator here.";
+                Name = "MyCustomIndicator";
+                Calculate = Calculate.OnBarClose;
+                IsOverlay = false;
+                DisplayInDataBox = true;
+                DrawOnPricePanel = true;
+                DrawHorizontalGridLines = true;
+                DrawVerticalGridLines = true;
+                PaintPriceMarkers = true;
+                ScaleJustification = NinjaTrader.Gui.Chart.ScaleJustification.Right;
+                //Disable this property if your indicator requires custom values that cumulate with each new market data event. 
+                //See Help Guide for additional information.
+                IsSuspendedWhileInactive = true;
+                msd = 1;
+                msdsub= 1;
+                Level = 1;
+                AddPlot(new Stroke(Brushes.Red, 2), PlotStyle.Bar, "Line");
+
             }
             else if (State == State.Configure)
-			{
-				
-			}
-	
+            {
+              
+            }
+
         }
 
-		
+
         public enum TIMEZONE
-		{
+        {
             Chicago,
             Frankfurt,
             Hong_Kong,
@@ -124,7 +128,7 @@ namespace NinjaTrader.NinjaScript.Indicators
 
 
         }
-        
+
         public int getValue(POSITION pos)
         {
             int layer = Math.Max(Math.Abs(pos.cx), Math.Abs(pos.cy));
@@ -421,68 +425,68 @@ namespace NinjaTrader.NinjaScript.Indicators
             switch (location)
             {
                 case TIMEZONE.Chicago:
-                    longitude = 41.51;
-                    latitude = 87.39;
+                    longitude = (41 + 51) / 180 * Math.PI;
+                    latitude = (87 + 39) / 180 * Math.PI;
                     utcOffset = -6;
                     break;
                 case TIMEZONE.Frankfurt:
-                    longitude = 50.7;
-                    latitude = 8.4;
+                    longitude = (50 + 7) / 180 * Math.PI;
+                    latitude = (8 + 4) / 180 * Math.PI;
                     utcOffset = +1;
                     break;
                 case TIMEZONE.Mumbai:
-                    longitude = 18.58;
-                    latitude = 72.50;
+                    longitude = (18 + 58) / 180 * Math.PI;
+                    latitude = (72 + 50) / 180 * Math.PI;
                     utcOffset = 8;
                     break;
                 case TIMEZONE.London:
-                    longitude = 51.30;
-                    latitude = 0.10;
+                    longitude = (51 + 30) / 180 * Math.PI;
+                    latitude = (0 + 10) / 180 * Math.PI;
                     utcOffset = 1;
                     break;
                 case TIMEZONE.Hong_Kong:
-                    longitude = 22.17;
-                    latitude = 114.9;
+                    longitude = (22 + 17) / 180 * Math.PI;
+                    latitude = (114 + 9) / 180 * Math.PI;
                     utcOffset = 8;
                     break;
                 case TIMEZONE.Sydney:
-                    longitude = 33.52;
-                    latitude = 151.13;
+                    longitude = (33 + 52) / 180 * Math.PI;
+                    latitude = (151 + 13) / 180 * Math.PI;
                     utcOffset = 10;
                     break;
                 case TIMEZONE.Shanghai:
-                    longitude = 31.14;
-                    latitude = 121.28;
+                    longitude = (31 + 14) / 180 * Math.PI;
+                    latitude = (121 + 28) / 180 * Math.PI;
                     utcOffset = 8;
                     break;
                 case TIMEZONE.Kiev:
-                    longitude = 50.26;
-                    latitude = 30.31;
+                    longitude = (50 + 26) / 180 * Math.PI;
+                    latitude = (30 + 31) / 180 * Math.PI;
                     utcOffset = 2;
                     break;
                 case TIMEZONE.Moscow:
-                    longitude = 55.45;
-                    latitude = 37.35;
+                    longitude = (55 + 45) / 180 * Math.PI;
+                    latitude = (37 + 35) / 180 * Math.PI;
                     utcOffset = 3;
                     break;
                 case TIMEZONE.New_York:
-                    longitude = 40.43;
-                    latitude = 74.1;
+                    longitude = (40 + 43 / 60.0) / 180 * Math.PI;
+                    latitude = (71 + 1 / 60.0) / 180 * Math.PI;
                     utcOffset = -4;
                     break;
                 case TIMEZONE.Paris:
-                    longitude = 50.7;
-                    latitude = 8.4;
+                    longitude = (50 + 7 / 60.0) / 180 * Math.PI;
+                    latitude = (8 + 4 / 60.0) / 180 * Math.PI;
                     utcOffset = 2;
                     break;
                 case TIMEZONE.Sao_Paolo:
-                    longitude = 23.33;
-                    latitude = 46.38;
+                    longitude = (23 + 33) / 180 * Math.PI;
+                    latitude = (46 + 38) / 180 * Math.PI;
                     utcOffset = -3;
                     break;
                 case TIMEZONE.Seoul:
-                    longitude = 37.33;
-                    latitude = 126.58;
+                    longitude = (37 + 33) / 180 * Math.PI;
+                    latitude = (126 + 58) / 180 * Math.PI;
                     utcOffset = 9;
                     break;
             }
@@ -500,41 +504,74 @@ namespace NinjaTrader.NinjaScript.Indicators
             // Convert the position to longitude and latitude
             double sunLongitude = xx[0];
             double sunLatitude = xx[1];
-
+            /*
             // Calculate the angle between the sun and the location
             double angle = Math.Atan2(Math.Sin(sunLongitude - longitude),
                                         Math.Cos(latitude) * Math.Tan(sunLatitude) - Math.Sin(latitude) * Math.Cos(sunLongitude - longitude));
 
             // Convert the angle to degrees
             double degrees = Math.Abs(angle) * 180.0 / Math.PI;
-
-            return degrees;
+            */
+            return Math.Round(sunLongitude);
 
         }
         protected override void OnBarUpdate()
-		{
-			//Add your custom indicator logic here.
+        {
+            //Add your custom indicator logic here.
+            int z = 0;
+            double v = Close[0];
 
-			int currentPrice = (int)Close[0];
-            int v = currentPrice % 1000;
-            int m = (currentPrice / 1000) % 10;
+            while (v < Math.Pow(10, msd + 2))
+            {
+                v *= 10;
+                z--;
+            }
+            while (v > Math.Pow(10, msd + 3)-1)
+            {
+                v /= 10;
+                z++;
+            }
+           
+            int m = (int)v / 1000;
+            int v_ = (int)v % 1000 + msdsub * 1000;
+          
+            double[] priceupLevels = new double[4];
+            double[] pricelowLevels = new double[4];
+            for (int i = 0; i < 4; i++)
+            {
+                POSITION[] levelPos = getCrossPosByDirection(44, v_, i);
 
-            POSITION[] levelPos = getCrossPosByDirection((int)getSunAngle(myTimeZone), v, 1);
-            Print("-----------------------------");
-            Print(v);
-            Print((int)getSunAngle(myTimeZone));
-            Print(getValue(levelPos[0]));
-            Print(getValue(levelPos[1]));
-            Print("-----------------------------");
-            int hv = Math.Max(getValue(levelPos[0]), getValue(levelPos[1]));
-            int lv = Math.Min(getValue(levelPos[0]), getValue(levelPos[1]));
-			Draw.HorizontalLine(this, "Current", Close[0], Brushes.Red, DashStyleHelper.Dot, 2, true);
-			if(hv>v)
-			Draw.HorizontalLine(this, "Up", m * 1000 + hv, Plots[(Level - 1) * 2].Brush, Plots[(Level - 1) * 2].DashStyleHelper, (int)Plots[(Level - 1) * 2].Width, true);
-            if(lv<v)
-			Draw.HorizontalLine(this, "Down", m * 1000 + lv, Plots[(Level - 1) * 2 + 1].Brush, Plots[(Level - 1) * 2 + 1].DashStyleHelper, (int)Plots[(Level - 1) * 2 + 1].Width, true);
-		}
-	}
+                int hv = Math.Max(getValue(levelPos[0]), getValue(levelPos[1]));
+                int lv_ = Math.Min(getValue(levelPos[0]), getValue(levelPos[1]));
+             
+                int lv = lv_, zz=0;
+                if (lv < 1000)
+                {
+                    lv *= 10;
+                    zz -= 1;
+                }
+                priceupLevels[i] = ((m * 1000 + hv % 1000) * Math.Pow(10, z));
+                pricelowLevels[i] = ((m * 1000 + lv % 1000 * Math.Pow(10,zz)) * Math.Pow(10, z));
+            }
+            Array.Sort(priceupLevels);
+            Array.Sort(pricelowLevels);
+            for (int i = 0; i < Level; i++)
+            {
+                Print("--------------" + i + "--------------");
+               
+                Print((int)getSunAngle(myTimeZone));
+                Print(priceupLevels[i]);
+                Print(pricelowLevels[3-i]);
+
+                Draw.HorizontalLine(this, "Current", Close[0], Brushes.Red, DashStyleHelper.Dot, 2, true);
+                
+                Draw.HorizontalLine(this, "Up" + i, priceupLevels[i], Plots[0].Brush, Plots[0].DashStyleHelper, (int)Plots[0].Width, true);
+                Draw.HorizontalLine(this, "Down" + i, pricelowLevels[3-i], Plots[0].Brush, Plots[0].DashStyleHelper, (int)Plots[0].Width, true);
+
+                Print("-----------------------------");
+            }
+        }
+    }
 }
 
 #region NinjaScript generated code. Neither change nor remove.
